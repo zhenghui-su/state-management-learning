@@ -1,0 +1,12 @@
+{
+	"extends": "../../tsconfig.json", // 继承根目录配置文件
+	"compilerOptions": {
+		// 编译选项
+		"paths": {
+			// 设置应用别名
+			"valtio": ["./src/index.ts"],
+			"valtio/*": ["./src/*.ts"]
+		}
+	},
+	"include": ["src"] // 限定类型检查范围
+}

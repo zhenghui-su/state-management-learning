@@ -1,0 +1,27 @@
+name: ci # workflow名称，用来在 GitHub Actions 界面中标识不同的 workflow
+
+on: # 定义了触发工作流的事件
+  push:
+    branches: [main] # 代码推送到 main 分支触发
+  pull_request:
+    types: [opened, synchronize] # PR 时首次被创建（open）以及有新的提交（synchronize）时触发
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # 指定运行环境，意味着该 job 会在 GitHub 托管的最新的 Ubuntu Linux 环境下运行
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 # 用来将代码库的最新版本下载到 workflow 的运行的环境中
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2 # 设置 pnpm
+        with:
+          version: 8 # 使用8版本
+      - name: Setup Node
+        uses: actions/setup-node@v4 # 设置nodejs环境并配置pnpm缓存
+        with:
+          node-version: '18'
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline # 安装依赖
+      - name: Run Tests
+        run: pnpm run test # 跑单元测试脚本
