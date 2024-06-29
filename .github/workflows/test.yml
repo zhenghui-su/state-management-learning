@@ -2,7 +2,7 @@ name: ci # workflow名称，用来在 GitHub Actions 界面中标识不同的 wo
 
 on: # 定义了触发工作流的事件
   push:
-    branches: [main] # 代码推送到 main 分支触发
+    branches: [master] # 代码推送到 master 分支触发
   pull_request:
     types: [opened, synchronize] # PR 时首次被创建（open）以及有新的提交（synchronize）时触发
 
