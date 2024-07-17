@@ -1,5 +1,8 @@
 import { act, fireEvent, render } from '@testing-library/react'
 import { create } from 'zustand'
+import { shallow } from 'zustand/shallow'
+import { useShallow } from 'zustand/react/shallow'
+import React from 'react'
 
 type FilterType = 'all' | 'completed' | 'incompleted'
 
@@ -80,12 +83,126 @@ describe('测试re-render', () => {
     })
     expect(renderCount).toBe(2)
   })
+
   it('加selector', async () => {
     let renderCount = 0
 
     const Display = () => {
       renderCount++ // 每次re-render就会增加1
       const todos = useStore((state) => state.todos)
+      return (
+        <div>
+          {todos.map((todo) => (
+            <div key={todo.id}>title: {todo.title}</div>
+          ))}
+        </div>
+      )
+    }
+
+    const Control = () => {
+      const { setFilter } = useStore()
+      return <button onClick={() => setFilter('completed')}>dispatch</button>
+    }
+
+    const App = () => (
+      <>
+        <Display />
+        <Control />
+      </>
+    )
+    const { getByText } = render(<App />)
+    act(() => {
+      fireEvent.click(getByText('dispatch'))
+    })
+    expect(renderCount).toBe(1)
+  })
+
+  it('不加shallow', async () => {
+    let renderCount = 0
+
+    const Display = () => {
+      renderCount++ // 每次re-render就会增加1
+      const { todos, setFilter } = useStore((state) => ({
+        todos: state.todos,
+        setFilter: state.setFilter,
+      }))
+      return (
+        <div>
+          {todos.map((todo) => (
+            <div key={todo.id}>title: {todo.title}</div>
+          ))}
+        </div>
+      )
+    }
+
+    const Control = () => {
+      const { setFilter } = useStore()
+      return <button onClick={() => setFilter('completed')}>dispatch</button>
+    }
+
+    const App = () => (
+      <>
+        <Display />
+        <Control />
+      </>
+    )
+    const { getByText } = render(<App />)
+    act(() => {
+      fireEvent.click(getByText('dispatch'))
+    })
+    expect(renderCount).toBe(2)
+  })
+
+  it('加shallow', async () => {
+    let renderCount = 0
+
+    const Display = () => {
+      renderCount++ // 每次re-render就会增加1
+      const { todos, setFilter } = useStore(
+        (state) => ({
+          todos: state.todos,
+          setFilter: state.setFilter,
+        }),
+        shallow,
+      )
+      return (
+        <div>
+          {todos.map((todo) => (
+            <div key={todo.id}>title: {todo.title}</div>
+          ))}
+        </div>
+      )
+    }
+
+    const Control = () => {
+      const { setFilter } = useStore()
+      return <button onClick={() => setFilter('completed')}>dispatch</button>
+    }
+
+    const App = () => (
+      <>
+        <Display />
+        <Control />
+      </>
+    )
+    const { getByText } = render(<App />)
+    act(() => {
+      fireEvent.click(getByText('dispatch'))
+    })
+    expect(renderCount).toBe(1)
+  })
+
+  it('使用useShallow', async () => {
+    let renderCount = 0
+
+    const Display = () => {
+      renderCount++ // 每次re-render就会增加1
+      const { todos, setFilter } = useStore(
+        useShallow((state) => ({
+          todos: state.todos,
+          setFilter: state.setFilter,
+        })),
+      )
       return (
         <div>
           {todos.map((todo) => (
