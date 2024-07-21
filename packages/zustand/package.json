@@ -1,7 +1,7 @@
 {
-  "name": "custom-zustand",
+  "name": "su-zustand",
   "version": "1.0.2",
-  "description": "A custom implementation of Zustand",
+  "description": "简易Zustand",
   "author": "suzhenghui",
   "type": "module",
   "main": "./dist/index.cjs",
