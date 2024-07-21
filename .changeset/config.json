@@ -1,0 +1,9 @@
+{
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "zhenghui-su/state-management-learning" }
+  ],
+  "access": "public",
+  "baseBranch": "master",
+  "tag": true
+}
