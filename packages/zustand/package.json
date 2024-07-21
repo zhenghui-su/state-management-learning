@@ -1,6 +1,6 @@
 {
   "name": "custom-zustand",
-  "version": "2.0.2",
+  "version": "1.0.0",
   "description": "A custom implementation of Zustand",
   "author": "suzhenghui",
   "type": "module",
@@ -41,6 +41,10 @@
     "node": ">=12.7.0"
   },
   "contributors": [],
+  "bugs": {
+    "url": "https://github.com/zhenghui-su/state-management-learning/issues"
+  },
+  "homepage": "https://github.com/zhenghui-su/state-management-learning",
   "dependencies": {
     "use-sync-external-store": "^1.2.0"
   },
