@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "exports": {
     ".": {
       "import": {
@@ -20,5 +20,8 @@
         "default": "./dist/index.cjs"
       }
     }
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0"
   }
 }
